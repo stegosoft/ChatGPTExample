@@ -13,7 +13,7 @@ def docstring_prompt_zh_tw(code):
     return prompt
 
 def docstring_prompt(code):
-    prompt = f"{code}\n # A high quality python docstring of the above python function, before docstring add 4 space:\n '''"
+    prompt = f"{code}\n # A high quality python docstring of the above python function, before ever row of docstring add 4 space:\n '''"
     return prompt
 
 def merge_docstring_and_function(original_function, docstring):
@@ -36,5 +36,5 @@ def get_docstrings(docstring_prompt_function,function_name):
 
 
 
-get_docstrings(docstring_prompt_zh_tw, hello)
-get_docstrings(docstring_prompt, hello)
+get_docstrings(docstring_prompt_zh_tw, merge_docstring_and_function)
+get_docstrings(docstring_prompt, merge_docstring_and_function)
