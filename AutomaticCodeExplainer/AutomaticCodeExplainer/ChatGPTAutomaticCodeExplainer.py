@@ -39,23 +39,35 @@ def insert_docstring(function_code, docstring):
     else:
         return function_code
 
-function_code = """def add(a, b):
-    return a + b"""
+def add_string_to_filename(file_path, string_to_add):
+    file_name, file_extension = os.path.splitext(file_path)
+    new_file_name = f"{file_name}{string_to_add}{file_extension}"
+    return new_file_name
 
-docstring = generate_docstring(function_code)
+def process_file(filepath):
+    with open(filepath, "r", encoding="utf-8") as file:
+        content = file.read()
 
-updated_function_code = insert_docstring(function_code, docstring)
-print(updated_function_code)
+    # 使用正則表達式查找所有函數
+    functions = re.finditer(r"(def\s+\w+\()", content)
 
-#def add(a, b):
-#"""
-#    This function adds two numbers and returns the result.
+    # 逆序處理每個函數，以避免在插入docstring時影響後續函數的位置
+    for match in reversed(list(functions)):
+        start_index = match.start()
+        end_index = content.find(":\n", start_index) + 1
+        function_code = content[start_index:end_index]
 
-#    Parameters:
-#    a (int): The first number to add.
-#    b (int): The second number to add.
+        docstring = generate_docstring(function_code)
+        updated_function_code = insert_docstring(function_code, docstring)
 
-#    Returns:
-#    int: The result of the addition.
-#"""
-#    return a + b
+        # 將生成的docstring插入到原始代碼中
+        content = content[:start_index] + updated_function_code + content[end_index:]
+
+    # 將更新後的代碼寫回文件
+    filename = add_string_to_filename(filepath, "_withdocstrings_chatgpt")
+    with open(filename, "w") as f:
+        f.write(content)
+
+# 將以下行替換為您要處理的Python文件的路徑
+file_path = "functions.py"
+process_file(file_path)
