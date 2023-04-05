@@ -26,7 +26,15 @@ def insert_docstring(function_code, docstring):
     if match:
         # 在函數開頭的下一行插入docstring
         index = match.end()
-        updated_function_code = function_code[:index] + "\n    " + docstring.replace("\n", "\n    ") + "\n" + function_code[index:]
+        indent = re.search(r"^\s*", function_code).group()  # 獲取當前的縮排
+        newline_index = function_code.find('\n', index) + 1  # 查找換行符的位置
+        updated_function_code = (
+            function_code[:newline_index]
+            + indent
+            + docstring.replace("\n", f"\n{indent}")
+            + "\n"
+            + function_code[newline_index:]
+        )
         return updated_function_code
     else:
         return function_code
@@ -38,3 +46,16 @@ docstring = generate_docstring(function_code)
 
 updated_function_code = insert_docstring(function_code, docstring)
 print(updated_function_code)
+
+#def add(a, b):
+#"""
+#    This function adds two numbers and returns the result.
+
+#    Parameters:
+#    a (int): The first number to add.
+#    b (int): The second number to add.
+
+#    Returns:
+#    int: The result of the addition.
+#"""
+#    return a + b
