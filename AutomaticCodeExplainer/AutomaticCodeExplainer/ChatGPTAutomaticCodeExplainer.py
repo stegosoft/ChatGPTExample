@@ -1,5 +1,6 @@
 import openai
 import os
+import re
 
 openai.api_key = os.environ.get("OPEN_API_KEY")
 
@@ -17,8 +18,23 @@ def generate_docstring(function_code):
     docstring = response.choices[0].text.strip()
     return docstring
 
+
+def insert_docstring(function_code, docstring):
+    # 查找函數的開頭位置
+    match = re.search(r"def\s+\w+\(", function_code)
+
+    if match:
+        # 在函數開頭的下一行插入docstring
+        index = match.end()
+        updated_function_code = function_code[:index] + "\n    " + docstring.replace("\n", "\n    ") + "\n" + function_code[index:]
+        return updated_function_code
+    else:
+        return function_code
+
 function_code = """def add(a, b):
     return a + b"""
 
 docstring = generate_docstring(function_code)
-print(docstring)
+
+updated_function_code = insert_docstring(function_code, docstring)
+print(updated_function_code)
