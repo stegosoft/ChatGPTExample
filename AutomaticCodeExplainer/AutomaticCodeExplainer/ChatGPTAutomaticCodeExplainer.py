@@ -69,13 +69,14 @@ def process_file(filepath):
         f.write(content)
 
 def insert_docstring_csharp(method_code, docstring):
-    match = re.search(r"(\s+)(public|private|protected|internal)(\s+)", method_code)
+    match = re.search(r"(\s+)(public|private|protected|internal)(\s+)(static\s+)?\w+\s+\w+\s*\(.*\)", method_code)
 
     if match:
         indentation = match.group(1)
         docstring_lines = docstring.split("\n")
         indented_docstring = "\n".join([indentation + line for line in docstring_lines])
-        updated_method_code = method_code.replace(match.group(0), f"{indentation}/// {indented_docstring}\n{match.group(0)}", 1)
+        indented_docstring = indented_docstring.replace("'''","").replace('"""',"").rstrip()
+        updated_method_code = method_code.replace(match.group(0), f"{indentation}/*{indented_docstring}\n{indentation}*/\n{match.group(0)}", 1)
         return updated_method_code
     else:
         return method_code
@@ -84,28 +85,39 @@ def process_csharp_file(filepath):
     with open(filepath, "r", encoding="utf-8") as file:
         content = file.read()
 
-    methods = re.finditer(r"(public|private|protected|internal)\s+(static\s+)?\w+\s+\w+\s*\(.*\)\s*\{", content, flags=re.MULTILINE)
+    methods = re.finditer(r"((?<=\n)[ \t]*)(public|private|protected|internal)\s+(static\s+)?\w+\s+\w+\s*\(.*\)\s*\{", content, flags=re.MULTILINE)
 
     for match in reversed(list(methods)):
         start_index = match.start()
         end_index = match.end()
-        method_code = content[start_index:end_index]
+
+        brace_count = 1
+        for i in range(end_index, len(content)):
+            if content[i] == '{':
+                brace_count += 1
+            elif content[i] == '}':
+                brace_count -= 1
+
+            if brace_count == 0:
+                break
+
+        method_code = content[start_index:i+1]
 
         docstring = generate_docstring(method_code)
         updated_method_code = insert_docstring_csharp(method_code, docstring)
 
-        content = content[:start_index] + updated_method_code + content[end_index:]
+        content =  content[:start_index] +updated_method_code + content[i+1:]
 
     filename = add_string_to_filename(filepath, "_withdocstrings_chatgpt")
     with open(filename, "w") as f:
         f.write(content)
 
-method_code="""        static int Add(int a, int b)
+method_code="""    public double CalculateArea()
         {
-            return a + b;
+            return Width * Height;
         }"""
 
-#print(generate_docstring(method_code))
+#print(insert_docstring_csharp(method_code,generate_docstring(method_code)))
 
 # 將以下行替換為您要處理的Python文件的路徑
 file_path = "csSampleCode.cs"
