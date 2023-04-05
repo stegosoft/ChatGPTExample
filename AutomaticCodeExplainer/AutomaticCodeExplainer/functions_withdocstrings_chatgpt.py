@@ -8,8 +8,8 @@ import numpy as np
     Store a pandas DataFrame in a SQL database.
     
     Parameters:
-    df (pandas.DataFrame): DataFrame to store in the database.
-    table_name (str): Name of the table to store the DataFrame.
+    df (pandas.DataFrame): The DataFrame to be stored in a database.
+    table_name (str): The name of the table that the DataFrame should be stored in.
     
     Returns:
     None
@@ -20,17 +20,13 @@ def dataframe_to_database(df, table_name):
     return engine
 
 """
-    Handle an API response and return the data.
+    Handle the response from a web request.
 
-    Parameters
-    ----------
-    response : dict
-        The response from an API call.
+    Parameters:
+    response (str): The response from a web request.
 
-    Returns
-    -------
-    data : dict
-        The data contained in the response.
+    Returns:
+    dict: A dictionary containing the response data.
     """
 def handle_response(response):
     query = response["choices"][0]["text"]
@@ -39,14 +35,19 @@ def handle_response(response):
     return query
 
 """
-    Executes a SQL query on the given engine.
+    Executes a given query on a given engine.
 
-    Parameters:
-    engine (object): The engine to execute the query on.
-    query (str): The SQL query to execute.
+    Parameters
+    ----------
+    engine : object
+        The engine to execute the query on.
+    query : str
+        The query to execute.
 
-    Returns:
-    object: The result of the query.
+    Returns
+    -------
+    object
+        The result of the query.
     """
 def execute_query(engine, query):
     with engine.connect() as conn:
@@ -54,14 +55,14 @@ def execute_query(engine, query):
         return result.fetchall()
 
 """
-    Calculate the grade of a student based on their answers to a set of questions.
-    
+    Calculate the grade of a student based on the correct answer to a question and their answer.
+
     Parameters:
-        correct_answer_dict (dict): Dictionary containing the correct answer for each question.
-        answers (dict): Dictionary containing the student's answers to each question.
-    
+    correct_answer_dict (dict): Dictionary of questions and their correct answer.
+    answers (dict): Dictionary of questions and the student's answer.
+
     Returns:
-        float: The student's grade, represented as a float between 0 and 1.
+    float: Grade as a percentage.
     """
 def grade(correct_answer_dict, answers):
     correct_answers = 0
@@ -78,14 +79,14 @@ def grade(correct_answer_dict, answers):
 
 
 """
-    Checks for duplicate links in a file of new content.
-    
+    Check for duplicate links in the given content.
+
     Parameters:
-    path_to_new_content (str): The path to the file containing the new content.
-    links (list): A list of links to check for duplicates.
-    
+        path_to_new_content (str): Path to the new content to be checked.
+        links (list): List of links to be checked.
+
     Returns:
-    bool: True if duplicate links are found, False otherwise.
+        bool: True if duplicate links are found, False otherwise.
     """
 def check_for_duplicate_links(path_to_new_content, links):
     urls = [str(link.get("href")) for link in links]

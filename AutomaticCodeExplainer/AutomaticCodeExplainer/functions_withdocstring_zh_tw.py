@@ -1,12 +1,12 @@
 def check_for_duplicate_links(path_to_new_content, links):
     '''
-    ÀË¬d¬O§_¦³­«½Æªº³sµ²
+    ï¿½Ë¬dï¿½Oï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½Æªï¿½ï¿½sï¿½ï¿½
     Parameters:
-        path_to_new_content: ·s¤º®eªº¸ô®|
-        links: ©Ò¦³³sµ²
+        path_to_new_content: ï¿½sï¿½ï¿½ï¿½eï¿½ï¿½ï¿½ï¿½|
+        links: ï¿½Ò¦ï¿½ï¿½sï¿½ï¿½
     Return:
-        True: ¦³­«½Æªº³sµ²
-        False: ¨S¦³­«½Æ    '''
+        True: ï¿½ï¿½ï¿½ï¿½ï¿½Æªï¿½ï¿½sï¿½ï¿½
+        False: ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½    '''
     urls = [str(link.get("href")) for link in links]
     content_path = str(Path(*path_to_new_content.parts[-2:]))
     return content_path in urls
@@ -14,14 +14,14 @@ def check_for_duplicate_links(path_to_new_content, links):
 
 def dataframe_to_database(df, table_name):
     '''
- ±N¸ê®Æ®Ø¬[Âà´«¦¨¸ê®Æ®w
+ ï¿½Nï¿½ï¿½Æ®Ø¬[ï¿½à´«ï¿½ï¿½ï¿½ï¿½Æ®w
  
  Parameters:
- df: ¸ê®Æ®Ø¬[
- table_name: ¸ê®Æªí¦WºÙ
+ df: ï¿½ï¿½Æ®Ø¬[
+ table_name: ï¿½ï¿½Æªï¿½Wï¿½ï¿½
  
  Returns:
- engine: ¸ê®Æ®w¤ÞÀº
+ engine: ï¿½ï¿½Æ®wï¿½ï¿½ï¿½ï¿½
     '''
     engine = create_engine(f'sqlite:///:memory:', echo=False)
     df.to_sql(name=table_name, con=engine, index=False)
@@ -30,11 +30,11 @@ def dataframe_to_database(df, table_name):
 
 def execute_query(engine, query):
     '''
-    ¥\¯à: °õ¦æ SQL ¬d¸ß
-    °Ñ¼Æ: 
+    ï¿½\ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ SQL ï¿½dï¿½ï¿½
+    ï¿½Ñ¼ï¿½: 
         engine: SQLAlchemy engine
-        query: SQL ¬d¸ß
-    ¦^¶Ç­È: ¬d¸ßµ²ªG
+        query: SQL ï¿½dï¿½ï¿½
+    ï¿½^ï¿½Ç­ï¿½: ï¿½dï¿½ßµï¿½ï¿½G
     '''
     with engine.connect() as conn:
         result = conn.execute(text(query))
@@ -44,8 +44,8 @@ def execute_query(engine, query):
 def grade(correct_answer_dict, answers):
     '''
     grade(correct_answer_dict, answers):
-    ¥\¯à: 
-        ®Ú¾Úµª®×¦r¨å¤Î¨Ï¥ÎªÌµª®×¡A­pºâ¨Ï¥ÎªÌµª¹ïÃD¼Æ¤Î¦Ê¤À¤ñ¡A¨Ã§PÂ_¬O§_³q¹L¦Ò    '''
+    ï¿½\ï¿½ï¿½: 
+        ï¿½Ú¾Úµï¿½ï¿½×¦rï¿½ï¿½Î¨Ï¥ÎªÌµï¿½ï¿½×¡Aï¿½pï¿½ï¿½Ï¥ÎªÌµï¿½ï¿½ï¿½ï¿½Dï¿½Æ¤Î¦Ê¤ï¿½ï¿½ï¿½Aï¿½Ã§Pï¿½_ï¿½Oï¿½_ï¿½qï¿½Lï¿½ï¿½    '''
     correct_answers = 0
     for question, answer in answers.items():
         if answer.upper() == correct_answer_dict[question].upper()[16]:
@@ -61,9 +61,9 @@ def grade(correct_answer_dict, answers):
 
 def handle_response(response):
     '''
-    ¥\¯à: ±N response ¤¤ªº query ¥[¤W Select ¦r¦ê
-    °Ñ¼Æ: response (dict)
-    ¦^¶Ç­È: query (str)
+    ï¿½\ï¿½ï¿½: ï¿½N response ï¿½ï¿½ï¿½ï¿½ query ï¿½[ï¿½W Select ï¿½rï¿½ï¿½
+    ï¿½Ñ¼ï¿½: response (dict)
+    ï¿½^ï¿½Ç­ï¿½: query (str)
     '''
     query = response["choices"][0]["text"]
     if query.startswith(" "):

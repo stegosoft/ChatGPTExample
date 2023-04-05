@@ -17,13 +17,13 @@ namespace ShapeAreaCalculator
         }
 
         /*        
-            Calculate the area of a given rectangle.
+            Calculate the area of a rectangle.
             
             Parameters:
                 None
             
             Returns:
-                float: The area of the rectangle.
+                double: The area of the rectangle.
         */
         public double CalculateArea()
         {
@@ -41,13 +41,13 @@ namespace ShapeAreaCalculator
         }
 
         /*        
-            Calculates the area of a circle.
+            Calculate the area of a circle given the radius.
             
             Parameters:
-                None
+                Radius (float): The radius of the circle.
             
             Returns:
-                double: The area of the circle.
+                float: The area of the circle.
         */
         public double CalculateArea()
         {
@@ -67,14 +67,14 @@ namespace ShapeAreaCalculator
         }
 
         /*        
-            Calculate the area of a triangle given the base and height.
+            Calculate the area of a triangle given its base and height.
             
             Parameters:
-                Base (double): The base of the triangle.
-                Height (double): The height of the triangle.
-                
+                Base (float): The base of the triangle.
+                Height (float): The height of the triangle.
+            
             Returns:
-                double: The area of the triangle.
+                float: The area of the triangle.
         */
         public double CalculateArea()
         {

@@ -44,7 +44,7 @@ def add_string_to_filename(file_path, string_to_add):
     new_file_name = f"{file_name}{string_to_add}{file_extension}"
     return new_file_name
 
-def process_file(filepath):
+def process_python_file(filepath):
     with open(filepath, "r", encoding="utf-8") as file:
         content = file.read()
 
@@ -119,6 +119,18 @@ method_code="""    public double CalculateArea()
 
 #print(insert_docstring_csharp(method_code,generate_docstring(method_code)))
 
+def process_file(file_path):
+    _, file_extension = os.path.splitext(file_path)
+
+    if file_extension.lower() == ".py":
+        process_python_file(file_path)
+    elif file_extension.lower() == ".cs":
+        process_csharp_file(file_path)
+    else:
+        print(f"Unsupported file type: {file_extension}")
+
 # 將以下行替換為您要處理的Python文件的路徑
 file_path = "csSampleCode.cs"
-process_csharp_file(file_path)
+process_file(file_path)
+file_path = "functions.py"
+process_file(file_path)
