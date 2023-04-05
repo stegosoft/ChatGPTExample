@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>83bcb5dc-7dfc-4150-a328-72e0498e9a77</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>ChatGPTAutomaticCodeExplainer.py</StartupFile>
+    <StartupFile>AutomaticCodeExplainer.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

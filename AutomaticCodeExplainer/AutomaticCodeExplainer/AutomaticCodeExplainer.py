@@ -73,9 +73,9 @@ for fun in all_functions:
 
 functions_to_prompt = functions
 functions_to_prompt_name = pathlib.Path(functions_to_prompt.__file__).stem
-with open(f"{functions_to_prompt_name}_withdocstring.py", "w") as f:
+with open(f"{functions_to_prompt_name}_withdocstring.py", "w", encoding="utf-8") as f:
     f.write("\n\n".join(functions_with_docstrings))
-with open(f"{functions_to_prompt_name}_withdocstring_zh_tw.py", "w") as f:
+with open(f"{functions_to_prompt_name}_withdocstring_zh_tw.py", "w", encoding="utf-8") as f:
     f.write("\n\n".join(functions_with_dotstrings_zh_tw))
 
 #get_docstrings(docstring_prompt_zh_tw, merge_docstring_and_function)

@@ -59,7 +59,7 @@ def grade(correct_answer_dict, answers):
         correct_answer_dict (dict): A dictionary of correct answers.
         answers (dict): A dictionary of answers given by a student.
     Returns:
-        A string containing the grade and pass/fail message.
+        A string containing the grade and a pass/fail message.
     '''
     correct_answers = 0
     for question, answer in answers.items():

@@ -1,12 +1,12 @@
 def check_for_duplicate_links(path_to_new_content, links):
     '''
-    �ˬd�O�_�����ƪ��s��
+    檢查是否有重複的連結
     Parameters:
-        path_to_new_content: �s���e����|
-        links: �Ҧ��s��
+        path_to_new_content: 新內容的路徑
+        links: 所有連結
     Return:
-        True: �����ƪ��s��
-        False: �S������    '''
+        True: 有重複的連結
+        False: 沒有重複    '''
     urls = [str(link.get("href")) for link in links]
     content_path = str(Path(*path_to_new_content.parts[-2:]))
     return content_path in urls
@@ -14,14 +14,14 @@ def check_for_duplicate_links(path_to_new_content, links):
 
 def dataframe_to_database(df, table_name):
     '''
- �N��Ʈج[�ഫ����Ʈw
+ 將資料框架轉換成資料庫
  
  Parameters:
- df: ��Ʈج[
- table_name: ��ƪ�W��
+ df: 資料框架
+ table_name: 資料表名稱
  
  Returns:
- engine: ��Ʈw����
+ engine: 資料庫引擎
     '''
     engine = create_engine(f'sqlite:///:memory:', echo=False)
     df.to_sql(name=table_name, con=engine, index=False)
@@ -30,11 +30,11 @@ def dataframe_to_database(df, table_name):
 
 def execute_query(engine, query):
     '''
-    �\��: ���� SQL �d��
-    �Ѽ�: 
+    功能: 執行 SQL 查詢
+    參數: 
         engine: SQLAlchemy engine
-        query: SQL �d��
-    �^�ǭ�: �d�ߵ��G
+        query: SQL 查詢
+    回傳值: 查詢結果
     '''
     with engine.connect() as conn:
         result = conn.execute(text(query))
@@ -43,9 +43,12 @@ def execute_query(engine, query):
 
 def grade(correct_answer_dict, answers):
     '''
-    grade(correct_answer_dict, answers):
-    �\��: 
-        �ھڵ��צr��ΨϥΪ̵��סA�p��ϥΪ̵����D�ƤΦʤ���A�çP�_�O�_�q�L��    '''
+    功能: 計算答題正確率
+    參數: 
+        correct_answer_dict: 正確答案字典
+        answers: 使用者答案字典
+    回傳值:
+        正確答    '''
     correct_answers = 0
     for question, answer in answers.items():
         if answer.upper() == correct_answer_dict[question].upper()[16]:
@@ -61,9 +64,9 @@ def grade(correct_answer_dict, answers):
 
 def handle_response(response):
     '''
-    �\��: �N response ���� query �[�W Select �r��
-    �Ѽ�: response (dict)
-    �^�ǭ�: query (str)
+    功能: 將 response 中的 query 加上 Select 字串
+    參數: response (dict)
+    回傳值: query (str)
     '''
     query = response["choices"][0]["text"]
     if query.startswith(" "):
