@@ -1,4 +1,4 @@
-import openai
+ï»¿import openai
 import os
 import re
 
@@ -20,14 +20,14 @@ def generate_docstring(function_code):
 
 
 def insert_docstring(function_code, docstring):
-    # ¬d§ä¨ç¼Æªº¶}ÀY¦ì¸m
+    # æŸ¥æ‰¾å‡½æ•¸çš„é–‹é ­ä½ç½®
     match = re.search(r"def\s+\w+\(", function_code)
 
     if match:
-        # ¦b¨ç¼Æ¶}ÀYªº¤U¤@¦æ´¡¤Jdocstring
+        # åœ¨å‡½æ•¸é–‹é ­çš„ä¸‹ä¸€è¡Œæ’å…¥docstring
         index = match.end()
-        indent = re.search(r"^\s*", function_code).group()  # Àò¨ú·í«eªºÁY±Æ
-        newline_index = function_code.find('\n', index) + 1  # ¬d§ä´«¦æ²Åªº¦ì¸m
+        indent = re.search(r"^\s*", function_code).group()  # ç²å–ç•¶å‰çš„ç¸®æ’
+        newline_index = function_code.find('\n', index) + 1  # æŸ¥æ‰¾æ›è¡Œç¬¦çš„ä½ç½®
         updated_function_code = (
             function_code[:newline_index]
             + indent
@@ -48,10 +48,10 @@ def process_python_file(filepath):
     with open(filepath, "r", encoding="utf-8") as file:
         content = file.read()
 
-    # ¨Ï¥Î¥¿«hªí¹F¦¡¬d§ä©Ò¦³¨ç¼Æ
+    # ä½¿ç”¨æ­£å‰‡è¡¨é”å¼æŸ¥æ‰¾æ‰€æœ‰å‡½æ•¸
     functions = re.finditer(r"(def\s+\w+\()", content)
 
-    # °f§Ç³B²z¨C­Ó¨ç¼Æ¡A¥HÁ×§K¦b´¡¤Jdocstring®É¼vÅT«áÄò¨ç¼Æªº¦ì¸m
+    # é€†åºè™•ç†æ¯å€‹å‡½æ•¸ï¼Œä»¥é¿å…åœ¨æ’å…¥docstringæ™‚å½±éŸ¿å¾ŒçºŒå‡½æ•¸çš„ä½ç½®
     for match in reversed(list(functions)):
         start_index = match.start()
         end_index = content.find(":\n", start_index) + 1
@@ -60,10 +60,10 @@ def process_python_file(filepath):
         docstring = generate_docstring(function_code)
         updated_function_code = insert_docstring(function_code, docstring)
 
-        # ±N¥Í¦¨ªºdocstring´¡¤J¨ì­ì©l¥N½X¤¤
+        # å°‡ç”Ÿæˆçš„docstringæ’å…¥åˆ°åŸå§‹ä»£ç¢¼ä¸­
         content = content[:start_index] + updated_function_code + content[end_index:]
 
-    # ±N§ó·s«áªº¥N½X¼g¦^¤å¥ó
+    # å°‡æ›´æ–°å¾Œçš„ä»£ç¢¼å¯«å›æ–‡ä»¶
     filename = add_string_to_filename(filepath, "_withdocstrings_chatgpt")
     with open(filename, "w") as f:
         f.write(content)
@@ -129,7 +129,7 @@ def process_file(file_path):
     else:
         print(f"Unsupported file type: {file_extension}")
 
-# ±N¥H¤U¦æ´À´«¬°±z­n³B²zªºPython¤å¥óªº¸ô®|
+# å°‡ä»¥ä¸‹è¡Œæ›¿æ›ç‚ºæ‚¨è¦è™•ç†çš„Pythonæ–‡ä»¶çš„è·¯å¾‘
 file_path = "csSampleCode.cs"
 process_file(file_path)
 file_path = "functions.py"
